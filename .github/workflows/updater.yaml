@@ -19,9 +19,10 @@ jobs:
           pr_title: upstream template update
           pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH}
           is_pr_cleanup: true
-          git_remote_pull_params: --allow-unrelated-histories
+          git_remote_pull_params: --allow-unrelated-histories --strategy=recursive #by default it uses -X theirs which overrides all local changes if a file was updated on both sides
           steps: "prechecks,pull" 
       #place to fix merge conflicts with genai
+      - run: git status && git merge
       - uses: AndreasAugustin/actions-template-sync@v2
         with:
           source_repo_path: schdief/template
@@ -30,5 +31,5 @@ jobs:
           pr_title: upstream template update
           pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH}
           is_pr_cleanup: true
-          git_remote_pull_params: --allow-unrelated-histories
+          git_remote_pull_params: --allow-unrelated-histories --strategy=recursive
           steps: "commit,push,pr" 
