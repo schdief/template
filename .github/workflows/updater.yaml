@@ -15,3 +15,7 @@ jobs:
         with:
           source_repo_path: schdief/template
           upstream_branch: main
+          pr_branch_name_prefix: updater
+          pr_title: upstream template update
+          pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH}
+          is_pr_cleanup: true
