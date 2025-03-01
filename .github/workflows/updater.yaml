@@ -1,7 +1,7 @@
 name: updater
 on:
   schedule:
-  - cron: "0 0 1 * *"
+  - cron: "1 0 * * SUN"
   workflow_dispatch:
 jobs:
   update:
@@ -15,14 +15,10 @@ jobs:
         with:
           source_repo_path: schdief/template
           upstream_branch: main
-          pr_branch_name_prefix: updater
-          pr_title: upstream template update
-          pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH}
-          is_pr_cleanup: true
-          git_remote_pull_params: --allow-unrelated-histories --strategy=recursive #by default it uses -X theirs which overrides all local changes if a file was updated on both sides
+          git_remote_pull_params: --allow-unrelated-histories --strategy=recursive #by default it uses -X theirs which overrides all local changes if a file was updated on both sides, when using ours it just ignores template changes in the same situation, we need to respect both and decide intelligently
           steps: "prechecks,pull" 
-      #place to fix merge conflicts with genai
-      - run: git status && git merge
+      - run: git status
+      #add merger to resolve merge conflicts with the help of genai
       - uses: AndreasAugustin/actions-template-sync@v2
         with:
           source_repo_path: schdief/template
@@ -31,5 +27,4 @@ jobs:
           pr_title: upstream template update
           pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH}
           is_pr_cleanup: true
-          git_remote_pull_params: --allow-unrelated-histories --strategy=recursive
           steps: "commit,push,pr" 
