@@ -1,0 +1,20 @@
+# File: .github/workflows/template-sync.yml
+
+on:
+  # cronjob trigger
+  schedule:
+  - cron: "0 0 1 * *"
+  # manual trigger
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: AndreasAugustin/actions-template-sync@v2
+        with:
+          source_repo_path: schdief/template
+          upstream_branch: main
