@@ -17,5 +17,5 @@ jobs:
           upstream_branch: main
           pr_branch_name_prefix: updater
           pr_title: upstream template update
-          pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH} /n please rescue all your own changes that are still relevant by manually editing the PR source branch
+          pr_body: update from template ${SOURCE_REPO} with revision ${TEMPLATE_GIT_HASH} <br> please rescue all your own changes that are still relevant by manually editing the PR source branch
           is_pr_cleanup: true
