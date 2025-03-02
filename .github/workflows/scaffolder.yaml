@@ -11,7 +11,8 @@ jobs:
         run: find . -type f -exec sed -i "s/<<< SCAFFOLDER_REPO_NAME >>>/${{ github.event.repository.name }}/g" {} +
       - name: remove scaffolder
         run: rm .github/workflows/scaffolder.yaml
-      - run: ls -l .github/workflows #instead of this commit and push, use secret on org level with permissions to change workflows
+      - name: commit replacements
+        run: ls -l .github/workflows #instead of this commit and push, use secret on org level with permissions to change workflows
       #remove
       - run: cat pom.xml
       - run: cat README.md
