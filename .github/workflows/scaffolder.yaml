@@ -5,9 +5,6 @@ on:
 jobs:
   scaffold:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - name: replace SCAFFOLDER_REPO_NAME with repo name
