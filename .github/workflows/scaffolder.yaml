@@ -10,9 +10,9 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - name: Replace SCAFFOLDER_SYSTEM_NAME with workflow name
-        run: find . -type f -exec sed -i "s/<<< SCAFFOLDER_SYSTEM_NAME >>>/${{ github.workflow }}/g" {} +
+      - name: Replace SCAFFOLDER_SYSTEM_NAME with repo name
+        run: find . -type f -exec sed -i "s/<<< SCAFFOLDER_REPO_NAME >>>/${{ github.event.repository.name }}/g" {} +
       - name: remove scaffolder
         run: rm .github/workflows/scaffolder.yaml
-      - run: ls -l .github/workflows #instead of this commit and push
+      - run: ls -l .github/workflows #instead of this commit and push, use secret on org level with permissions to change workflows
       - run: cat pom.xml
