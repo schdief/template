@@ -1,0 +1,17 @@
+name: scaffolder
+on:
+  push:
+    branches: main
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace SCAFFOLDER_SYSTEM_NAME with workflow name
+        run: find . -type f -exec sed -i "s/<<< SCAFFOLDER_SYSTEM_NAME >>>/${{ github.workflow }}/g" {} +
+      - name: scaffolder
+        run: rm .github/workflows/scaffolder.yaml
+      - run: ls -l #instead of this commit and push
