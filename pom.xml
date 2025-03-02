@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.mycompany.app</groupId>
-    <artifactId><<< SCAFFOLDER_SYSTEM_NAME >>></artifactId>
+    <artifactId><<< SCAFFOLDER_REPO_NAME >>></artifactId>
     <version>1</version>
   </parent>
   <groupId>com.mycompany.app</groupId>
