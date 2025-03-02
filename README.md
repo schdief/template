@@ -1,4 +1,6 @@
-# template
+# Template
+
+This repository is based on the template: https://github.com/schdief/template
 
 # GitHub Actions
 This repository comes with 2 (actually 3) GitHub Actions:
