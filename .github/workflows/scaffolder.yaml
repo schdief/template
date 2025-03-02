@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Replace SCAFFOLDER_SYSTEM_NAME with workflow name
         run: find . -type f -exec sed -i "s/<<< SCAFFOLDER_SYSTEM_NAME >>>/${{ github.workflow }}/g" {} +
-      - name: scaffolder
+      - name: remove scaffolder
         run: rm .github/workflows/scaffolder.yaml
-      - run: ls -l #instead of this commit and push
+      - run: ls -l .github/workflows #instead of this commit and push
+      - run: cat pom.xml
