@@ -1,5 +1,5 @@
 name: scaffolder
-on:
+on: 
   push:
     branches: main
 jobs:
@@ -9,8 +9,8 @@ jobs:
       - uses: ServiceNow/servicenow-devops-change@main
         with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
-          instance-url: ${{ secrets.SN_INSTANCE_URL }}
-          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          instance-url: https://dev208227.service-now.com
+          tool-id: 35432ff783d87210340974b6feaad3bb
           context-github: ${{ toJSON(github) }}
           job-name: 'ServiceNow DevOps Change'
           change-request: '{"attributes":{"requested_by":{"name": "Test User"},"assignment_group":{"name": "Change Approval Team"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-08 11:59:59","end_date": "2025-10-09 11:59:59"}}'
