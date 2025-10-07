@@ -3,16 +3,23 @@ on:
   push:
     branches: main
 jobs:
-  scaffold:
+  ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: replace SCAFFOLDER_REPO_NAME with repo name
-        run: find . -type f -exec sed -i "s/<<< SCAFFOLDER_REPO_NAME >>>/${{ github.event.repository.name }}/g" {} +
-      - name: remove scaffolder
-        run: rm .github/workflows/scaffolder.yaml
-      - name: commit replacements
-        run: ls -l .github/workflows #instead of this commit and push, use secret on org level with permissions to change workflows
-      #remove
-      - run: cat pom.xml
-      - run: cat README.md
+      - uses: ServiceNow/servicenow-devops-change@main
+        with:
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'ServiceNow DevOps Change'
+          change-request: '{"attributes":{"requested_by":{"name": "Test User"},"assignment_group":{"name": "Change Approval Team"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-08 11:59:59","end_date": "2025-10-09 11:59:59"}}'
+          deployment-gate: '{"environment": "deploy-gates-demo", "jobName": "Deploy"}'
+  deploy:
+    name: 'Deploy'
+    needs: ServiceNowDevOpsChange
+    runs-on: ubuntu-latest
+    environment: deploy-gates-demo
+    steps:
+      - name: Run deployment scripts
+        run: echo Completed Deployment
