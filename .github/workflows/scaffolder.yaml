@@ -15,7 +15,8 @@ jobs:
           cx_tenant: dhl-sec
           base_uri: https://eu.ast.checkmarx.net
           cx_client_id: ast-app
-          cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
+          cx_client_secret: wayne
+          additional_params: --apikey ${{ secrets.CX_CLIENT_SECRET }}
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
     steps:
