@@ -14,7 +14,7 @@ jobs:
           project_name: schdief/template
           cx_tenant: dhl-sec
           base_uri: https://eu.ast.checkmarx.net
-          cx_client_id: a97db654-0a69-4c1d-b02f-80f1d1429d31
+          cx_client_id: ast-app
           cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
