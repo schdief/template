@@ -3,59 +3,28 @@ on:
   push:
     branches: main
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    env:
-      ACTIONS_STEP_DEBUG: true
-    steps:
-      - name: Test Change Creation Only
-        run: |
-          echo "Testing ServiceNow change creation..."
-          RESPONSE=$(curl -X POST "https://dev208227.service-now.com/api/sn_devops/v1/devops/orchestration/changeControl" \
-            -H "Content-Type: application/json" \
-            -H "Accept: application/json" \
-            -H "Authorization: sn_devops.DevOpsToken 35432ff783d87210340974b6feaad3bb:${{ secrets.SN_DEVOPS_TOKEN }}" \
-            -d '{
-              "toolId": "35432ff783d87210340974b6feaad3bb",
-              "stageName": "test",
-              "buildNumber": "'${{ github.run_id }}'",
-              "attemptNumber": "1",
-              "sha": "'${{ github.sha }}'",
-              "workflow": "test-minimal",
-              "repository": "schdief/template",
-              "branchName": "main",
-              "changeRequestDetails": {}
-            }' \
-            -w "\nHTTP Status: %{http_code}\n")
-          
-          echo "$RESPONSE"
-          echo "---"
-          echo "If you see a change number above, creation worked!"
-          echo "If you see an error, that's why the action is failing!"
-
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: true
     steps:
-      - name: ServiceNowDevOpsChange
+      - name: ServiceNow DevOps Change (Basic Auth)
         uses: ServiceNow/servicenow-devops-change@main
         id: change_request
         with:
-          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          # Use username/password instead of token
+          devops-integration-user-name: admin
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
           instance-url: https://dev208227.service-now.com
           tool-id: 35432ff783d87210340974b6feaad3bb
           context-github: ${{ toJSON(github) }}
-          job-name: 'ServiceNow DevOps Change'
-          # Use minimal change request - let ServiceNow use defaults
-          change-request: '{"attributes":{"priority":"2","comments":"Automated deployment from GitHub Actions","short_description":"Deploy from GitHub workflow scaffolder"}}'
-          timeout: '600'
-          interval: '30'
-
-      - name: Show Change Request Details
+          job-name: 'ServiceNowDevOpsChange'
+          change-request: '{}'
+          
+      - name: Show Results
         run: |
-          echo "Change Request Number: ${{ steps.change_request.outputs.change-request-number }}"
-          echo "Change Request Sys ID: ${{ steps.change_request.outputs.change-request-sys-id }}"
+          echo "✅ Change Number: ${{ steps.change_request.outputs.change-request-number }}"
+          echo "✅ Change Sys ID: ${{ steps.change_request.outputs.change-request-sys-id }}"
   deploy:
     name: 'Deploy'
     needs: ServiceNowDevOpsChange
