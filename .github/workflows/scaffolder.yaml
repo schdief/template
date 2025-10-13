@@ -37,4 +37,5 @@ jobs:
     steps:
       - name: Run deployment scripts
         run: echo Completed Deployment
- 
+        env:
+          GITHUB_TOKEN: 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
