@@ -6,44 +6,26 @@ jobs:
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
     env:
-      ACTIONS_STEP_DEBUG: true  # This will show the API request details
-      ACTIONS_RUNNER_DEBUG: true
+      ACTIONS_STEP_DEBUG: true
     steps:
       - name: ServiceNow DevOps Change
         uses: ServiceNow/servicenow-devops-change@main
         id: change_request
-        continue-on-error: true  # Continue to see outputs even on failure
         with:
           devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
           instance-url: https://dev208227.service-now.com
           tool-id: 35432ff783d87210340974b6feaad3bb
           context-github: ${{ toJSON(github) }}
           job-name: 'ServiceNow DevOps Change'
-          change-request: '{"attributes":{"requested_by":{"name": "Test User"},"assignment_group":{"name": "Change Approval Team"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-13 11:59:59","end_date": "2025-10-14 11:59:59"}}'
-          # Shorter timeouts to fail faster during debugging
-          timeout: '300'
+          # Use minimal change request - let ServiceNow use defaults
+          change-request: '{"attributes":{"priority":"2","comments":"Automated deployment from GitHub Actions","short_description":"Deploy from GitHub workflow scaffolder"}}'
+          timeout: '600'
           interval: '30'
-          changeCreationTimeOut: '180'
-          abortOnChangeCreationFailure: false  # Don't abort immediately
-          abortOnChangeStepTimeout: false  # Don't abort on timeout
 
-      - name: Show Results (Even on Failure)
-        if: always()
+      - name: Show Change Request Details
         run: |
-          echo "=== Action Outcome ==="
-          echo "Outcome: ${{ steps.change_request.outcome }}"
-          echo "Conclusion: ${{ steps.change_request.conclusion }}"
-          echo ""
-          echo "=== Change Request Details ==="
-          echo "Change Request Number: '${{ steps.change_request.outputs.change-request-number }}'"
-          echo "Change Request Sys ID: '${{ steps.change_request.outputs.change-request-sys-id }}'"
-          echo ""
-          echo "=== Next Steps ==="
-          echo "1. Check ServiceNow logs at https://dev208227.service-now.com"
-          echo "2. Navigate to: System Logs > System Log > All"
-          echo "3. Filter for recent errors related to DevOps Change"
-          echo "4. Look for the API endpoint that's failing during polling"
-        shell: bash
+          echo "Change Request Number: ${{ steps.change_request.outputs.change-request-number }}"
+          echo "Change Request Sys ID: ${{ steps.change_request.outputs.change-request-sys-id }}"
   deploy:
     name: 'Deploy'
     needs: ServiceNowDevOpsChange
