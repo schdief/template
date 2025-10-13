@@ -5,6 +5,8 @@ on:
 jobs:
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: true  # Enable debug logging
     steps:
       - uses: ServiceNow/servicenow-devops-change@main
         with:
