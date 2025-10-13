@@ -3,6 +3,36 @@ on:
   push:
     branches: main
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: true
+    steps:
+      - name: Test Change Creation Only
+        run: |
+          echo "Testing ServiceNow change creation..."
+          RESPONSE=$(curl -X POST "https://dev208227.service-now.com/api/sn_devops/v1/devops/orchestration/changeControl" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/json" \
+            -H "Authorization: sn_devops.DevOpsToken 35432ff783d87210340974b6feaad3bb:${{ secrets.SN_DEVOPS_TOKEN }}" \
+            -d '{
+              "toolId": "35432ff783d87210340974b6feaad3bb",
+              "stageName": "test",
+              "buildNumber": "'${{ github.run_id }}'",
+              "attemptNumber": "1",
+              "sha": "'${{ github.sha }}'",
+              "workflow": "test-minimal",
+              "repository": "schdief/template",
+              "branchName": "main",
+              "changeRequestDetails": {}
+            }' \
+            -w "\nHTTP Status: %{http_code}\n")
+          
+          echo "$RESPONSE"
+          echo "---"
+          echo "If you see a change number above, creation worked!"
+          echo "If you see an error, that's why the action is failing!"
+
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
     env:
