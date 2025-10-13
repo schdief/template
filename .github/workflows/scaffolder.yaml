@@ -8,7 +8,7 @@ jobs:
     env:
       ACTIONS_STEP_DEBUG: true
     steps:
-      - name: ServiceNow DevOps Change
+      - name: ServiceNowDevOpsChange
         uses: ServiceNow/servicenow-devops-change@main
         id: change_request
         with:
