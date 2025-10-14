@@ -11,14 +11,14 @@ jobs:
         id: change_request
         with:
           # Use username/password instead of token
-          devops-integration-user-name: admin
-          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          #devops-integration-user-name: admin
+          #devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
           instance-url: https://dev208227.service-now.com
           tool-id: 35432ff783d87210340974b6feaad3bb
           context-github: ${{ toJSON(github) }}
           job-name: 'ServiceNowDevOpsChange'
-          change-request: '{"attributes":{"requested_by":{"name": "System Administrator"},"assignment_group":{"name": "CAB Approval"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-14 11:59:59","end_date": "2025-10-15 11:59:59"}}'
-          
+          change-request: '{"attributes":{"requested_by":{"name": "System Administrator"},"assignment_group":{"name": "CAB Approval"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-14 11:59:59","end_date": "2025-10-15 11:59:59"}}'    
       - name: Show Results
         run: |
           echo "✅ Change Number: ${{ steps.change_request.outputs.change-request-number }}"
