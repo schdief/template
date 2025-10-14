@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ServiceNowDevOpsChange
-        uses: ServiceNow/servicenow-devops-change@6.1.0
+        uses: ServiceNow/servicenow-devops-change@v6.1.0
         id: change_request
         with:
           #devops-integration-user-name: admin
