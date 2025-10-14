@@ -5,8 +5,9 @@ on:
 jobs:
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
+    name: 'ServiceNow DevOps Change'
     steps:
-      - name: ServiceNowDevOpsChange
+      - name: ServiceNow Change #ServiceNowDevOpsChange
         uses: ServiceNow/servicenow-devops-change@main
         id: change_request
         with:
@@ -17,7 +18,7 @@ jobs:
           instance-url: https://dev208227.service-now.com
           tool-id: 35432ff783d87210340974b6feaad3bb
           context-github: ${{ toJSON(github) }}
-          job-name: 'ServiceNowDevOpsChange'
+          job-name: 'ServiceNow DevOps Change' #job-name: 'ServiceNowDevOpsChange'
           change-request: '{"attributes":{"requested_by":{"name": "System Administrator"},"assignment_group":{"name": "CAB Approval"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-14 11:59:59","end_date": "2025-10-15 11:59:59"}}'    
       - name: Show Results
         run: |
