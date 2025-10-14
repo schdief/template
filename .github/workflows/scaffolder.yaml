@@ -5,7 +5,6 @@ on:
 jobs:
   ServiceNowDevOpsChange:
     runs-on: ubuntu-latest
-    name: 'ServiceNow DevOps Change'
     steps:
       - name: ServiceNowDevOpsChange
         uses: ServiceNow/servicenow-devops-change@main
