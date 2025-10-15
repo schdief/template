@@ -13,8 +13,8 @@ jobs:
           #devops-integration-user-name: admin
           #devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
           devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
-          instance-url: https://dev208227.service-now.com
-          tool-id: 35432ff783d87210340974b6feaad3bb
+          instance-url: https://dev307459.service-now.com/
+          tool-id: d90c6cae8360b210edbf9ea6feaad336
           context-github: ${{ toJSON(github) }}
           job-name: ServiceNowDevOpsChange
           change-request: '{"attributes":{"requested_by":{"name": "System Administrator"},"assignment_group":{"name": "CAB Approval"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes","start_date": "2025-10-14 11:59:59","end_date": "2025-10-15 11:59:59"}}'    
